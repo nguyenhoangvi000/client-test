@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import { BankAccount } from '../../components/BankAccount/index';
+import './register.scss';
 
 import uuidv1 from 'uuid/v1';
-
 import * as IBAN from 'iban';
 
 export default class Register extends Component {
@@ -14,6 +14,7 @@ export default class Register extends Component {
       firstName: "",
       lastName: "",
       email: "",
+      isProvide: true,
       bankAccounts: [],
       errorMessages: []
     }
@@ -32,7 +33,8 @@ export default class Register extends Component {
       bankName: ''
     }
     this.setState({
-      bankAccounts: [...this.state.bankAccounts, newBankAccount]
+      bankAccounts: [...this.state.bankAccounts, newBankAccount],
+      isProvide: true
     })
   }
   onInputChange = (event) => {
@@ -86,20 +88,26 @@ export default class Register extends Component {
       })
     }
 
-    data.bankAccounts.forEach((bankAccount) => {
-      if (!IBAN.isValid(bankAccount.IBAN)) {
-        errorMessages.push({
-          key: bankAccount._id + 'IBAN',
-          message: 'IBAN is not valid'
-        })
-      }
-      if (this.isEmpty(bankAccount.bankName)) {
-        errorMessages.push({
-          key: bankAccount._id + 'bankName',
-          message: 'bankName is not valid'
-        })
-      }
-    })
+    if (this.isEmpty(data.bankAccounts)) {
+      this.state.isProvide = false;
+    }
+    else {
+      data.bankAccounts.forEach((bankAccount) => {
+        if (!IBAN.isValid(bankAccount.IBAN)) {
+          errorMessages.push({
+            key: bankAccount._id + '_IBAN',
+            message: 'IBAN is not valid'
+          })
+        }
+        if (this.isEmpty(bankAccount.bankName)) {
+          errorMessages.push({
+            key: bankAccount._id + '_bankName',
+            message: 'Bank Name not be empty'
+          })
+        }
+      })
+    }
+
     return errorMessages;
   }
 
@@ -180,7 +188,9 @@ export default class Register extends Component {
             }
             <div className="row">
               <div className="col-md-6 mx-auto text-center">
-                <p>You should provide at least one bank account</p>
+                {
+                  !this.state.isProvide ? <p className="provide-bank">You should provide at least one bank account</p> : ''
+                }
                 <button type="button" onClick={this.addBankAccount} className="btn bg-faded">+ Add bank account</button>
               </div>
             </div>
