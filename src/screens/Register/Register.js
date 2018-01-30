@@ -123,11 +123,15 @@ export default class Register extends Component {
       else {
         let result = this.state;
         delete result.errorMessages;
-        result.bankAccounts.map((bankAccount) => {
-          delete bankAccount._id;
-          return bankAccount;
-        })
-        alert(JSON.stringify(result, null, 4));
+        this.setState({
+          errorMessages: []
+        }, () => {
+          result.bankAccounts.map((bankAccount) => {
+            delete bankAccount._id;
+            return bankAccount;
+          })
+          alert(JSON.stringify(result, null, 4));
+        });
       }
     })
 
@@ -145,7 +149,7 @@ export default class Register extends Component {
           <form >
             <div className="row">
               <div className="col-md-6 mx-auto">
-                <div className="form-group has-success">
+                <div className="form-group">
                   <label className="form-control-label" htmlFor="inputFirstName">First name</label>
                   <input type="text" value={this.state.firstName} onChange={this.handleChange} className="form-control form-control-success" name="firstName" />
                   {
@@ -154,7 +158,7 @@ export default class Register extends Component {
                       : ''
                   }
                 </div>
-                <div className="form-group has-warning">
+                <div className="form-group">
                   <label className="form-control-label" htmlFor="inputLastname">Last name</label>
                   <input type="text" value={this.state.lastName} onChange={this.handleChange} className="form-control form-control-warning" name="lastName" />
                   {
@@ -163,7 +167,7 @@ export default class Register extends Component {
                       : ''
                   }
                 </div>
-                <div className="form-group has-danger">
+                <div className="form-group">
                   <label className="form-control-label" htmlFor="inputEmail">Email</label>
                   <input type="text" value={this.state.email} onChange={this.handleChange} className="form-control form-control-danger" name="email" />
                   {
