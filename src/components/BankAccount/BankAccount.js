@@ -9,7 +9,7 @@ export const BankAccount = (props) => {
           <input type="text" value={props.data.IBAN} onChange={props.onInputChange} className="form-control form-control-success" id={props.data._id + '_IBAN'} />
           {
             props.errorMessages.filter((errorMessage) => errorMessage.key === props.data._id + '_IBAN').length > 0 ?
-              <small className="form-text text-danger">{this.state.errorMessages.filter((errorMessage) => errorMessage.key === props.data._id + '_IBAN')[0].message}</small> : ''
+              <small className="form-text text-danger">{this.state.errorMessages.filter((errorMessage) => errorMessage.key === props.data._id + '_IBAN')[0].message}||''</small> : ''
           }
         </div>
         <div className="form-group has-success">
@@ -17,7 +17,7 @@ export const BankAccount = (props) => {
           <input type="text" value={props.data.bankName} onChange={props.onInputChange} className="form-control form-control-success" id={props.data._id + '_bankName'} />
           {
             props.errorMessages.filter((errorMessage) => errorMessage.key === props.data._id + '_bankName').length > 0 ?
-              <small className="form-text text-danger">{this.state.errorMessages.filter((errorMessage) => errorMessage.key === props.data._id + '_bankName')[0].message}</small> : ''
+              <small className="form-text text-danger">{this.state.errorMessages.filter((errorMessage) => errorMessage.key === props.data._id + '_bankName')[0].message}||''</small> : ''
           }
         </div>
       </div>
